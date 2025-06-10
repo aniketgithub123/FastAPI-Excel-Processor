@@ -1,56 +1,69 @@
-📊 FastAPI Excel Processor
-📘 Overview
-This FastAPI application reads an Excel file (capbudg.xls) and provides API endpoints to:
+# 📊 FastAPI Excel Processor
 
-✅ List all sheet names (considered as tables)
+A lightweight and modular FastAPI application to process and query Excel data using **FastAPI**, **Pandas**, and **xlrd**.
 
-✅ Show all row names (first-column values) from a selected sheet
+---
 
-✅ Calculate the sum of all numerical values in a specified row
+## 📦 Project Deliverables
 
-📍 Base URL: http://localhost:9090
+- ✅ **GitHub Repository** with clean and well-documented code.
+- ✅ `README.md` with setup and usage instructions.
+- ✅ **Postman Collection** for testing API endpoints.
+- ✅ **Well-structured API** for Excel table inspection and processing.
 
-🚀 Getting Started
-1️⃣ Install Dependencies
-bash
-Copy
-Edit
+---
+
+## 🚀 Local Testing
+
+⚙️ Run locally and test via Postman: `http://localhost:9090`  
+📁 Use `FastAPI-Excel-Processor.postman_collection.json` for quick testing.
+
+---
+
+## 🖥️ Setup Instructions
+
+### 📌 Install Dependencies
+
+```bash
 pip install fastapi uvicorn pandas xlrd
-2️⃣ Project Structure
-css
-Copy
-Edit
-FastAPI-Excel-Processor/
-├── Data/
-│   └── capbudg.xls
-├── main.py
-├── FastAPI-Excel-Processor.postman_collection.json
-└── README.md
-3️⃣ Run the FastAPI Server
-bash
-Copy
-Edit
+```
+
+### 📌 Run the FastAPI Server
+```bash
 uvicorn main:app --reload --port 9090
-Then open your browser or Postman to test the endpoints.
+```
+---
+### 🗃️ Project Structure
+```
+FastAPI-Excel-Processor/
+|
+├── Data/
+│   └── capbudg.xls                            # Excel file to be processed
+├── main.py                                    # FastAPI application
+├── FastAPI-Excel-Processor.postman_collection.json  # Postman collection
+└── README.md                                  # Project documentation
+```
+---
 
-🔌 API Endpoints
-📂 GET /list_tables
-Lists all available sheet names in the Excel file.
+### 🌐 API Endpoints
+📁 `/list_tables`
+| Method | Endpoint       | Description                     |
+| ------ | -------------- | ------------------------------- |
+| GET    | `/list_tables` | Lists all available sheet names |
 
-✅ Example Response
-json
-Copy
-Edit
+**Example Response:**
+```bash
 {
   "tables": ["CapBudgWS"]
 }
-📂 GET /get_table_details?table_name=CapBudgWS
-Returns all first-column values (row names) from the specified sheet.
+```
+📁 `/get_table_details?table_name=CapBudgWS`
+| Method | Endpoint             | Description                      |
+| ------ | -------------------- | -------------------------------- |
+| GET    | `/get_table_details` | Lists all first-column row names |
 
-✅ Example Response
-json
-Copy
-Edit
+**Example Response:**
+```bash
 {
   "table_name": "CapBudgWS",
   "row_names": [
@@ -63,74 +76,58 @@ Edit
     "Other invest.(non-depreciable)="
   ]
 }
-📂 GET /row_sum?table_name=CapBudgWS&row_name=Tax Credit (if any )=
-Calculates and returns the sum of all numeric values in the specified row.
+```
+📁 `/row_sum?table_name=CapBudgWS&row_name=Tax Credit (if any )=`
+| Method | Endpoint   | Description                            |
+| ------ | ---------- | -------------------------------------- |
+| GET    | `/row_sum` | Returns sum of numeric values in a row |
 
-✅ Example Response
-json
-Copy
-Edit
+**Example Response:**
+```bash
 {
   "table_name": "CapBudgWS",
   "row_name": "Tax Credit (if any )=",
   "sum": 0.4
 }
-🧠 Developer Insights
-🔧 Potential Improvements
-Add support for .xlsx files via openpyxl
+```
+---
+## 🧪 How to Test the App
+### ✅ Postman Testing
+1. Open Postman. <br>
+2. Import `FastAPI-Excel-Processor.postman_collection.json.` <br>
+3. Set base URL as `http://localhost:9090.` <br>
+4. Test these endpoints: <br>
+  - `/list_tables`
+  - `/get_table_details?table_name=CapBudgWS`
+  - `/row_sum?table_name=CapBudgWS&row_name=Tax Credit (if any )=`
 
-Add file upload support via POST endpoint
 
-Add a simple UI for selecting files, sheets, and rows
+### ✅ Browser Testing
+Open these URLs in browser to test GET endpoints directly.
 
-Implement caching for performance
+---
+## 💡 Developer Insights
+### 🔧 Potential Improvements
+- Add support for .xlsx via openpyxl
+- Add file upload via POST endpoint
+- Build a basic UI for selecting files, sheets, and rows
+- Implement caching for performance
+- Add authentication for secure access
+- Optionally support currency/unit symbols in sums
 
-Add authentication for secure access
+### ⚠️ Known Limitations
+- Only supports .xls files
+- Empty Excel files may throw errors
+- Merged cells/formulas not handled
+- Misspelled sheet or row names trigger generic errors
+- Rows with no numbers return sum = 0 (can be unclear)
+---
+## 📚 Technologies Used
+- ⚡ **FastAPI**
+- 📘 **Pandas**
+- 📄 **xlrd**
+- 🧪 **Postman**
+- 🐍 **Python**
 
-Optionally display units (like %) in row sums
 
-⚠️ Known Limitations
-Empty Excel files may cause errors
-
-Misspelled sheet or row names cause generic errors
-
-Rows with no numeric values return sum = 0, which may be unclear
-
-Merged cells and Excel formulas aren't explicitly handled
-
-🧪 Testing (Postman)
-A Postman collection is included:
-
-📁 FastAPI-Excel-Processor.postman_collection.json
-
-✅ How to Use:
-Open Postman
-
-Click Import → File and select the collection file
-
-Set the base URL to: http://localhost:9090
-
-Test the endpoints:
-
-/list_tables
-
-/get_table_details
-
-/row_sum
-
-📚 Technologies Used
-⚡ FastAPI
-
-📘 Pandas
-
-📄 xlrd
-
-🧪 Postman
-
-🐍 Python 3
-
-👨‍💻 Author
-Aniket Kadam
-AI/ML Developer & FastAPI Enthusiast
-
-📫 GitHub | LinkedIn
+ > 👨‍💻 Built with ❤️ by Aniket Kadam
